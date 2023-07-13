@@ -145,8 +145,12 @@ apply Iff.intro
  |inr hfalse => exfalso; exact hfalse
 ·intro h; apply Or.inl; exact h
 
+example : p ∧ False ↔ False := by
+apply Iff.intro
+·intro h; exact h.2
+·intro h; exfalso; exact h
 
 
-/-example : p ∧ False ↔ False := sorry
-example : (p → q) → (¬q → ¬p) := sorry 
+
+/-example : (p → q) → (¬q → ¬p) := sorry 
 -/
