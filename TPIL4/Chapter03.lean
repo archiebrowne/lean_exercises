@@ -105,19 +105,17 @@ apply Iff.intro
  push_neg; exact h
 
 
+example : ¬p ∨ ¬q → ¬(p ∧ q) := by
+intro h
+cases h with
+|inl hnp => intro hpq; have hp : p := hpq.1; contradiction
+|inr hnq => intro hpq; have hq : q := hpq.2; contradiction
 
 
 
 
 
-
-
-
-
-
-
-/-example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
-example : ¬(p ∧ ¬p) := sorry
+/-example : ¬(p ∧ ¬p) := sorry
 example : p ∧ ¬q → ¬(p → q) := sorry
 example : ¬p → (p → q) := sorry
 example : (¬p ∨ q) → (p → q) := sorry
