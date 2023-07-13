@@ -12,13 +12,20 @@ apply Iff.intro
 ·intro h
  intro x; constructor; exact h.1 x; exact h.2 x
  
+example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := by
+intros hpq hp
+intro x
+specialize hp x
+specialize hpq x
+exact hpq hp
 
+example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := by
+intro h
+intro x
+cases h with
+|inl hp => apply Or.inl; exact hp x
+|inr hq => apply Or.inr; exact hq x
 
-
-/-
-example : (∀ x, p x → q x) → (∀ x, p x) → (∀ x, q x) := sorry
-example : (∀ x, p x) ∨ (∀ x, q x) → ∀ x, p x ∨ q x := sorry
--/
 
 -- Exercise 02
 
