@@ -62,12 +62,19 @@ apply Iff.intro
  
 -- Exercise 03
 
--- variable (men : Type) (barber : men)
--- variable (shaves : men → men → Prop)
+variable (men : Type) (barber : men)
+variable (shaves : men → men → Prop)
 
-/-
-example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := sorry
--/
+open Classical
+
+example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := by
+have hpara : shaves barber barber ↔ ¬ shaves barber barber := h barber
+have hn_self_shave : ¬ shaves barber barber := sorry
+have h_self_shave : shaves barber barber := hpara.mpr hn_self_shave
+contradiction
+
+
+
 
 -- Exercise 04
 
