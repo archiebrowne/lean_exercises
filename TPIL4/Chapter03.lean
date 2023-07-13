@@ -8,6 +8,7 @@ apply Iff.intro
 ·intro h; constructor; exact h.2; exact h.1
 ·intro h; constructor; exact h.2; exact h.1
 
+
 example : p ∨ q ↔ q ∨ p := by 
 apply Iff.intro
 ·intro h
@@ -22,11 +23,16 @@ apply Iff.intro
 
 
 -- associativity of ∧ and ∨
-/- example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := sorry
+example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := by
+apply Iff.intro
+·intro h; constructor; exact h.1.1; constructor; exact h.1.2; exact h.2
+·intro h; constructor; constructor; exact h.1; exact h.2.1; exact h.2.2
+
+
 example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
 
 -- distributivity
-example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
+/- example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
 example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
 
 -- other properties
