@@ -118,9 +118,16 @@ have hnp : ¬p := hpnp.2
 contradiction
 
 
+example : p ∧ ¬q → ¬(p → q) := by
+intros h hpq
+have hp : p := h.1
+have hnq : ¬q := h.2
+have hq : q := hpq hp
+contradiction
 
-/-example : p ∧ ¬q → ¬(p → q) := sorry
-example : ¬p → (p → q) := sorry
+
+
+/-example : ¬p → (p → q) := sorry
 example : (¬p ∨ q) → (p → q) := sorry
 example : p ∨ False ↔ p := sorry
 example : p ∧ False ↔ False := sorry
