@@ -77,22 +77,24 @@ apply Iff.intro
   |inl hp => apply Or.inl; exact hp
   |inr hr => apply Or.inr; constructor <;> assumption
 
- 
-
-
-
-
-
-
-
-
-
-
-
 
 -- other properties
-/- example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
-example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
+example : (p → (q → r)) ↔ (p ∧ q → r) := by
+apply Iff.intro
+·intros h₁ h₂ 
+ exact h₁ h₂.1 h₂.2
+·intros h₁ hp hq
+ exact h₁ ⟨hp, hq⟩ 
+  
+
+
+
+
+
+
+
+
+/- example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
 example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
 example : ¬(p ∧ ¬p) := sorry
