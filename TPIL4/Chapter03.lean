@@ -8,7 +8,6 @@ apply Iff.intro
 ·intro h; constructor; exact h.2; exact h.1
 ·intro h; constructor; exact h.2; exact h.1
 
-
 example : p ∨ q ↔ q ∨ p := by 
 apply Iff.intro
 ·intro h
@@ -20,14 +19,11 @@ apply Iff.intro
  |inr hq => apply Or.inl; assumption 
  |inl hp => apply Or.inr; assumption
 
-
-
 -- associativity of ∧ and ∨
 example : (p ∧ q) ∧ r ↔ p ∧ (q ∧ r) := by
 apply Iff.intro
 ·intro h; constructor; exact h.1.1; constructor; exact h.1.2; exact h.2
 ·intro h; constructor; constructor; exact h.1; exact h.2.1; exact h.2.2
-
 
 example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := by
 apply Iff.intro
@@ -46,8 +42,6 @@ apply Iff.intro
   |inl hq => apply Or.inl; apply Or.inr; assumption
   |inr hr => apply Or.inr; assumption
 
-
-
 -- distributivity
 example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
 apply Iff.intro
@@ -59,7 +53,6 @@ apply Iff.intro
  match h with
  |Or.inl ⟨hp, hq⟩ => constructor; exact hp; apply Or.inl; exact hq
  |Or.inr ⟨hp, hr⟩ => constructor; exact hp; apply Or.inr; exact hr
-
 
 example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := by
 apply Iff.intro
@@ -77,7 +70,6 @@ apply Iff.intro
   |inl hp => apply Or.inl; exact hp
   |inr hr => apply Or.inr; constructor <;> assumption
 
-
 -- other properties
 example : (p → (q → r)) ↔ (p ∧ q → r) := by
 apply Iff.intro
@@ -85,8 +77,6 @@ apply Iff.intro
  exact h₁ h₂.1 h₂.2
 ·intros h₁ hp hq
  exact h₁ ⟨hp, hq⟩ 
-  
-
 
 example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := by
 apply Iff.intro
@@ -96,14 +86,12 @@ apply Iff.intro
  |inl hp => exact h.1 hp
  |inr hq => exact h.2 hq
 
-
 example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := by
 apply Iff.intro
 ·intro h 
  push_neg at h; exact h
 ·intro h 
  push_neg; exact h
-
 
 example : ¬p ∨ ¬q → ¬(p ∧ q) := by
 intro h
@@ -117,7 +105,6 @@ have hp : p := hpnp.1
 have hnp : ¬p := hpnp.2
 contradiction
 
-
 example : p ∧ ¬q → ¬(p → q) := by
 intros h hpq
 have hp : p := h.1
@@ -129,7 +116,6 @@ example : ¬p → (p → q) := by
 intros hnp hp
 exfalso
 contradiction
-
 
 example : (¬p ∨ q) → (p → q) := by
 intros h hp
@@ -150,7 +136,8 @@ apply Iff.intro
 ·intro h; exact h.2
 ·intro h; exfalso; exact h
 
+example : (p → q) → (¬q → ¬p) := by
+intros hpq hnq hp
+have hq : q := hpq hp
+contradiction
 
-
-/-example : (p → q) → (¬q → ¬p) := sorry 
--/
