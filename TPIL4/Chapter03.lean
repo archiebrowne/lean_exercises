@@ -125,10 +125,14 @@ have hnq : ¬q := h.2
 have hq : q := hpq hp
 contradiction
 
+example : ¬p → (p → q) := by
+intros hnp hp
+exfalso
+contradiction
 
 
-/-example : ¬p → (p → q) := sorry
-example : (¬p ∨ q) → (p → q) := sorry
+
+/-example : (¬p ∨ q) → (p → q) := sorry
 example : p ∨ False ↔ p := sorry
 example : p ∧ False ↔ False := sorry
 example : (p → q) → (¬q → ¬p) := sorry 
