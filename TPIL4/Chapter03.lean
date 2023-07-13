@@ -131,9 +131,15 @@ exfalso
 contradiction
 
 
+example : (¬p ∨ q) → (p → q) := by
+intros h hp
+cases h with
+|inl hnp => exfalso; contradiction
+|inr hq => exact hq
 
-/-example : (¬p ∨ q) → (p → q) := sorry
-example : p ∨ False ↔ p := sorry
+
+
+/-example : p ∨ False ↔ p := sorry
 example : p ∧ False ↔ False := sorry
 example : (p → q) → (¬q → ¬p) := sorry 
 -/
