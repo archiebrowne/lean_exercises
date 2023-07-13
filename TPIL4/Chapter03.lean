@@ -46,9 +46,30 @@ apply Iff.intro
   |inl hq => apply Or.inl; apply Or.inr; assumption
   |inr hr => apply Or.inr; assumption
 
+
+
 -- distributivity
-/- example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
-example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
+example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := by
+apply Iff.intro
+·intro h
+ match h with
+ |⟨hp, Or.inl hq⟩ => apply Or.inl; constructor <;> assumption
+ |⟨hp, Or.inr hr⟩ => apply Or.inr; constructor <;> assumption
+·intro h
+ match h with
+ |Or.inl ⟨hp, hq⟩ => constructor; exact hp; apply Or.inl; exact hq
+ |Or.inr ⟨hp, hr⟩ => constructor; exact hp; apply Or.inr; exact hr
+
+
+
+
+
+
+
+
+
+
+/- example : p ∨ (q ∧ r) ↔ (p ∨ q) ∧ (p ∨ r) := sorry
 
 -- other properties
 example : (p → (q → r)) ↔ (p ∧ q → r) := sorry
