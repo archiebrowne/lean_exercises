@@ -88,14 +88,21 @@ apply Iff.intro
   
 
 
+example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := by
+apply Iff.intro
+·intro h; constructor <;> intro h'; exact h (Or.inl h'); exact h (Or.inr h')
+·intros h h'
+ cases h' with
+ |inl hp => exact h.1 hp
+ |inr hq => exact h.2 hq
+
+ 
 
 
 
 
 
-
-/- example : ((p ∨ q) → r) ↔ (p → r) ∧ (q → r) := sorry
-example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
+/- example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
 example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
 example : ¬(p ∧ ¬p) := sorry
 example : p ∧ ¬q → ¬(p → q) := sorry
