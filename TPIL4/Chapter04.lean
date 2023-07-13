@@ -65,36 +65,34 @@ apply Iff.intro
 variable (men : Type) (barber : men)
 variable (shaves : men → men → Prop)
 
-open Classical
-
 example (h : ∀ x : men, shaves barber x ↔ ¬ shaves x x) : False := by
 have hpara : shaves barber barber ↔ ¬ shaves barber barber := h barber
-have hn_self_shave : ¬ shaves barber barber := sorry
-have h_self_shave : shaves barber barber := hpara.mpr hn_self_shave
-contradiction
-
-
-
+apply Or.elim (Classical.em (shaves barber barber))
+·intro h
+ have hn_shaves_self : ¬ shaves barber barber := hpara.mp h
+ contradiction
+·intro h
+ have h_shaves_self : shaves barber barber := hpara.mpr h
+ contradiction
 
 -- Exercise 04
 
-/-
-def even (n : Nat) : Prop := sorry
+def even (n : Nat) : Prop := ∃ m : Nat, n = 2 * m
 
-def prime (n : Nat) : Prop := sorry
+def prime (n : Nat) : Prop := (n > 2) ∧ (∀ m : Nat, n % m = 0 → (m = 0 ∨ m = 1 ∨ m = n ))
 
-def infinitely_many_primes : Prop := sorry
+def infinitely_many_primes : Prop := ∀ n : Nat, ∃ p : Nat, p > n ∧ prime p
 
-def Fermat_prime (n : Nat) : Prop := sorry
+def Fermat_prime (n : Nat) : Prop := prime n ∧ (∃ m : Nat, n = 2^(2^m) + 1) 
 
-def infinitely_many_Fermat_primes : Prop := sorry
+def infinitely_many_Fermat_primes : Prop := ∀ n : Nat, ∃ p : Nat, p > n ∧ Fermat_prime n
 
-def goldbach_conjecture : Prop := sorry
+def goldbach_conjecture : Prop := ∀ n : Nat, n > 2 → ∃ p q : Nat, prime p ∧ prime q ∧ (n = p + q)  
 
-def Goldbach's_weak_conjecture : Prop := sorry
+def Goldbach's_weak_conjecture : Prop := ∀ n : Nat, (n % 2 = 1) ∧ n > 5 → ∃ p q r : Nat, prime p ∧ prime q ∧ prime r ∧ n = p + q + r    
 
-def Fermat's_last_theorem : Prop := sorry
--/
+def Fermat's_last_theorem : Prop := ∀ n : Nat, n > 2 → ¬ ∃ (a b c : Nat), a^n + b^n = c^n
+
 
 -- Exercise 05
 
