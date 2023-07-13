@@ -137,9 +137,16 @@ cases h with
 |inl hnp => exfalso; contradiction
 |inr hq => exact hq
 
+example : p ∨ False ↔ p := by
+apply Iff.intro
+·intro h
+ cases h with
+ |inl hp => exact hp
+ |inr hfalse => exfalso; exact hfalse
+·intro h; apply Or.inl; exact h
 
 
-/-example : p ∨ False ↔ p := sorry
-example : p ∧ False ↔ False := sorry
+
+/-example : p ∧ False ↔ False := sorry
 example : (p → q) → (¬q → ¬p) := sorry 
 -/
