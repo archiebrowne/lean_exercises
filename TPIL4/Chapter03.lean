@@ -96,14 +96,27 @@ apply Iff.intro
  |inl hp => exact h.1 hp
  |inr hq => exact h.2 hq
 
- 
+
+example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := by
+apply Iff.intro
+·intro h 
+ push_neg at h; exact h
+·intro h 
+ push_neg; exact h
 
 
 
 
 
-/- example : ¬(p ∨ q) ↔ ¬p ∧ ¬q := sorry
-example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
+
+
+
+
+
+
+
+
+/-example : ¬p ∨ ¬q → ¬(p ∧ q) := sorry
 example : ¬(p ∧ ¬p) := sorry
 example : p ∧ ¬q → ¬(p → q) := sorry
 example : ¬p → (p → q) := sorry
