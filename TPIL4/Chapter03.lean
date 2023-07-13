@@ -29,7 +29,22 @@ apply Iff.intro
 ·intro h; constructor; constructor; exact h.1; exact h.2.1; exact h.2.2
 
 
-example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := sorry
+example : (p ∨ q) ∨ r ↔ p ∨ (q ∨ r) := by
+apply Iff.intro
+·intro h
+ cases h with
+ |inl hpq => 
+  cases hpq with
+  |inl hp => apply Or.inl; assumption
+  |inr hq => apply Or.inr; apply Or.inl; assumption
+ |inr hr => apply Or.inr; apply Or.inr; assumption
+·intro h
+ cases h with
+ |inl hp => apply Or.inl; apply Or.inl; assumption
+ |inr hqr => 
+  cases hqr with
+  |inl hq => apply Or.inl; apply Or.inr; assumption
+  |inr hr => apply Or.inr; assumption
 
 -- distributivity
 /- example : p ∧ (q ∨ r) ↔ (p ∧ q) ∨ (p ∧ r) := sorry
