@@ -111,12 +111,15 @@ cases h with
 |inl hnp => intro hpq; have hp : p := hpq.1; contradiction
 |inr hnq => intro hpq; have hq : q := hpq.2; contradiction
 
+example : ¬(p ∧ ¬p) := by
+intro hpnp
+have hp : p := hpnp.1
+have hnp : ¬p := hpnp.2
+contradiction
 
 
 
-
-/-example : ¬(p ∧ ¬p) := sorry
-example : p ∧ ¬q → ¬(p → q) := sorry
+/-example : p ∧ ¬q → ¬(p → q) := sorry
 example : ¬p → (p → q) := sorry
 example : (¬p ∨ q) → (p → q) := sorry
 example : p ∨ False ↔ p := sorry
