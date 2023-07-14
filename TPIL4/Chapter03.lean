@@ -141,13 +141,38 @@ intros hpq hnq hp
 have hq : q := hpq hp
 contradiction
 
-/-
+
 open Classical
 
-variable (p q r : Prop)
+example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := by
+intro h
+apply by_contradiction
+intro h'
+push_neg at h'
+have hpq : p ∧ ¬q := h'.1
+have hp : p := h'.2.1
+have hnr : ¬r := h'.2.2
+have hqr : q ∨ r := h hp
+have hnq : ¬q := hpq.2 
+cases hqr with
+|inl hq => contradiction
+|inr hr => contradiction
 
-example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := sorry
-example : ¬(p ∧ q) → ¬p ∨ ¬q := sorry
+example : ¬(p ∧ q) → ¬p ∨ ¬q := by
+intro h
+apply Or.elim (em p)
+·intro hp
+ apply Or.inr
+ intro hq
+ exact h ⟨hp, hq⟩
+·intro hnp
+ apply Or.inl
+ exact hnp
+
+
+
+
+/-
 example : ¬(p → q) → p ∧ ¬q := sorry
 example : (p → q) → (¬p ∨ q) := sorry
 example : (¬q → ¬p) → (p → q) := sorry
