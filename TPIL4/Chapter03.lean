@@ -169,17 +169,49 @@ apply Or.elim (em p)
  apply Or.inl
  exact hnp
 
+example : ¬(p → q) → p ∧ ¬q := by
+intro h
+apply by_contradiction
+intro h'
+simp at h'
+contradiction
 
+example : (p → q) → (¬p ∨ q) := by
+intro h
+apply Or.elim (em p)
+·intro hp
+ apply Or.inr
+ exact h hp
+·intro hnp
+ apply Or.inl
+ exact hnp
 
+example : (¬q → ¬p) → (p → q) := by
+intros h hp
+apply by_contradiction
+intro hnq
+exact h hnq hp
 
-/-
-example : ¬(p → q) → p ∧ ¬q := sorry
-example : (p → q) → (¬p ∨ q) := sorry
-example : (¬q → ¬p) → (p → q) := sorry
-example : p ∨ ¬p := sorry
-example : (((p → q) → p) → p) := sorry
--/
+example : p ∨ ¬p := by
+exact em p
 
-/-
-Prove ¬(p ↔ ¬p) without using classical reasoning.
--/
+example : (((p → q) → p) → p) := by
+intro h
+apply by_contradiction
+intro hnp
+apply hnp
+apply h
+intro hp
+exfalso
+contradiction
+
+example : ¬(p ↔ ¬p) := by
+intro hpara
+have hpnp : p → ¬p := hpara.mp
+have hnpp : ¬p → p := hpara.mpr
+apply hpnp <;>
+apply hnpp <;>
+intro hp <;>
+apply absurd hp (hpnp hp)
+ 
+
