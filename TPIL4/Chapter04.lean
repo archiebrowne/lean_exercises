@@ -1,8 +1,10 @@
 import Mathlib.Tactic
 
-variable (α : Type) (p q : α → Prop)
-
 -- Exercise 01
+
+variable (α : Type) (p q : α → Prop) (r : Prop)
+
+section Exercise01
 
 example : (∀ x, p x ∧ q x) ↔ (∀ x, p x) ∧ (∀ x, q x) := by
 apply Iff.intro
@@ -25,9 +27,11 @@ cases h with
 |inl hp => apply Or.inl; exact hp x
 |inr hq => apply Or.inr; exact hq x
 
+end Exercise01
+
 -- Exercise 02
 
-variable (r : Prop)
+section Exercise02
 
 example : α → ((∀ x : α, r) ↔ r) := by
 intro hα
@@ -59,8 +63,11 @@ apply Iff.intro
  exact hrp hr
 ·intros h x hr
  exact h hr x
+
+end Exercise02
  
 -- Exercise 03
+section Exercise03
 
 variable (men : Type) (barber : men)
 variable (shaves : men → men → Prop)
@@ -75,7 +82,11 @@ apply Or.elim (Classical.em (shaves barber barber))
  have h_shaves_self : shaves barber barber := hpara.mpr h
  contradiction
 
+end Exercise03
+
 -- Exercise 04
+
+section Exercise04
 
 def even (n : Nat) : Prop := ∃ m : Nat, n = 2 * m
 
@@ -93,8 +104,105 @@ def Goldbach's_weak_conjecture : Prop := ∀ n : Nat, (n % 2 = 1) ∧ n > 5 → 
 
 def Fermat's_last_theorem : Prop := ∀ n : Nat, n > 2 → ¬ ∃ (a b c : Nat), a^n + b^n = c^n
 
+end Exercise04
 
 -- Exercise 05
 
-/- Prove as many exercises in existential quantifer section as possible -/
+section Exercise05
 
+open Classical
+
+example : (∃ x : α, r) → r := by
+intro
+|⟨a ,hr⟩ => assumption
+
+example (a : α) : r → (∃ x : α, r) := by
+intro hr
+exact ⟨a, hr⟩
+
+example : (∃ x, p x ∧ r) ↔ (∃ x, p x) ∧ r := by
+apply Iff.intro
+·intro
+ |⟨a, hpa, hr⟩ => exact ⟨⟨a, hpa⟩, hr⟩
+·intro
+ |⟨⟨a, hpa⟩, hr⟩ => exact ⟨a, hpa, hr⟩
+
+example : (∃ x, p x ∨ q x) ↔ (∃ x, p x) ∨ (∃ x, q x) := by
+apply Iff.intro
+·intro
+ |⟨a, Or.inl hpa⟩ => apply Or.inl; exact ⟨a, hpa⟩
+ |⟨a, Or.inr hqa⟩ => apply Or.inr; exact ⟨a, hqa⟩
+
+example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := by
+apply Iff.intro
+·intro h; simp; exact h
+·intro h; simp at h; exact h
+
+example : (∃ x, p x) ↔ ¬ (∀ x, ¬ p x) := by
+apply Iff.intro
+·intro
+ |⟨a, hpa⟩ => simp; exact ⟨a, hpa⟩
+·simp
+ intro a hpa
+ exact ⟨a, hpa⟩
+
+example : (¬ ∃ x, p x) ↔ (∀ x, ¬ p x) := by
+apply Iff.intro
+·intro h
+ simp at h
+ assumption
+·intro h 
+ simp
+ assumption
+
+example : (¬ ∀ x, p x) ↔ (∃ x, ¬ p x) := by
+apply Iff.intro
+·intro h 
+ simp at h
+ assumption
+·intro h
+ simp
+ assumption
+
+example : (∀ x, p x → r) ↔ (∃ x, p x) → r := by
+apply Iff.intro
+·intros h₁ h₂
+ match h₂ with
+ |⟨a, hpa⟩ => exact h₁ a hpa
+·intros h₁ a hpa
+ exact h₁ ⟨a, hpa⟩
+
+example (a : α) : (∃ x, p x → r) ↔ (∀ x, p x) → r := by
+apply Iff.intro
+·intros h₁ h₂
+ match h₁ with
+ |⟨a, ha⟩ => specialize h₂ a; exact ha h₂
+·intro h
+ apply Classical.by_contradiction
+ simp
+ intro h'
+ have hp : ∀ (x : α), p x := by {
+  intro a
+  exact (h' a).1
+ }
+ specialize h hp
+ apply absurd h (h' a).2
+ 
+example (a : α) : (∃ x, r → p x) ↔ (r → ∃ x, p x) := by
+apply Iff.intro
+·intros h hr
+ match h with
+ |⟨a, ha⟩ => specialize ha hr; use a; assumption
+·intro h
+ apply Or.elim (Classical.em r)
+ ·intro hr
+  match h hr with
+  |⟨w, hw⟩ => use w; intro hr'; assumption
+ ·intro hnr
+  apply Classical.by_contradiction
+  simp
+  intro h'
+  specialize h' a
+  apply absurd h'.1 hnr
+
+end Exercise05

@@ -141,7 +141,6 @@ intros hpq hnq hp
 have hq : q := hpq hp
 contradiction
 
-
 open Classical
 
 example : (p → q ∨ r) → ((p → q) ∨ (p → r)) := by
