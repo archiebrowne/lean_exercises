@@ -132,6 +132,10 @@ apply Iff.intro
 ·intro
  |⟨a, Or.inl hpa⟩ => apply Or.inl; exact ⟨a, hpa⟩
  |⟨a, Or.inr hqa⟩ => apply Or.inr; exact ⟨a, hqa⟩
+·intro h 
+ cases h with
+ |inl hp => match hp with | ⟨w, hw⟩ => use w; apply Or.inl; assumption
+ |inr hq => match hq with | ⟨w, hw⟩ => use w; apply Or.inr; assumption
 
 example : (∀ x, p x) ↔ ¬ (∃ x, ¬ p x) := by
 apply Iff.intro
