@@ -24,9 +24,28 @@ match hbc with
                         _ = (a * x) ^ 2 * y := by rw [hx]
                         _ = a ^ 2 * (x ^ 2 * y) := by ring
  
+example {x y z : ℕ} (h : x * y ∣ z) : x ∣ z := by
+  match h with 
+  |⟨c, hc⟩ => use (y * c); rw [hc]; ring
+
+example {a b : ℕ} (hab : a ∣ b) (hb : 0 < b) : 0 < a := by
+  match hab with
+  |⟨k, hk⟩ => 
+  have hak : 0 < a * k := by {
+    calc
+    0 < b := by exact hb
+    _ = a * k := by rw [hk]
+  }
+  apply by_contradiction
+  intro ha
+  simp at ha
+  rw [ha] at hak
+  rw [ha] at hk
+  simp at hk
+  rw [zero_mul] at hak
+  contradiction
 
 
- 
             
  
 
