@@ -1,5 +1,7 @@
 import Mathlib.Tactic
 
+-- Examples
+
 -- natural number division
 example : (11 : ℕ) ∣ 88 := by
   dsimp [(· ∣ ·)] -- deimplify the divides function
@@ -44,6 +46,20 @@ example {a b : ℕ} (hab : a ∣ b) (hb : 0 < b) : 0 < a := by
   simp at hk
   rw [zero_mul] at hak
   contradiction
+
+
+-- The real exercises
+
+example (t : ℤ) : t ∣ 0 := by
+use 0
+simp
+
+example : ¬(3 : ℤ) ∣ -10 := by
+dsimp [(·∣·)]
+intro
+|⟨k, hk⟩ => sorry
+
+
 
 
             
